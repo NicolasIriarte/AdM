@@ -99,10 +99,11 @@ int main(void)
   uint32_t data2[5] = {1,2,3,4,5};
 
   zeros_c(data1, 5);
+  zeros_asm(data2, 5);
 
   for (int i = 0; i < 5; ++i){
 	  assert(data1[i] == 0);
-	  // assert(data2[i] == 0);
+	  assert(data2[i] == 0);
   }
 
 
