@@ -21,7 +21,8 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-#include "asm_func.h"
+#include "ejemplo/ejemplo.h"
+#include "practica1-1/practica1.h"
 #include <assert.h>
 
 /* USER CODE END Includes */
@@ -87,8 +88,23 @@ int main(void)
   /* Initialize all configured peripherals */
   /* USER CODE BEGIN 2 */
 
-  uint32_t variable = asm_sum(200, 200);
-  assert(variable == 400);
+  // Ejemplo
+  uint32_t asm_value = sum_asm(200, 200);
+  uint32_t c_value = sum_c(200, 200);
+
+  assert(asm_value == c_value);
+
+  // Practica 1
+  uint32_t data1[5] = {1,2,3,4,5};
+  uint32_t data2[5] = {1,2,3,4,5};
+
+  zeros_c(data1, 5);
+
+  for (int i = 0; i < 5; ++i){
+	  assert(data1[i] == 0);
+	  // assert(data2[i] == 0);
+  }
+
 
   /* USER CODE END 2 */
 

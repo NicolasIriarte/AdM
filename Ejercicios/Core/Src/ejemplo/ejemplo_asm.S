@@ -4,7 +4,7 @@
 
 @ Simbolos exportados --> No olvidar de colocar los nombres de las funciones aquí
 .global asm_svc
-.global asm_sum
+.global sum_asm
 
 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 @ Prototipo en "C":
@@ -14,7 +14,6 @@
     asm_svc:
         svc 0
         bx lr
-
 
 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 @ Prototipo en "C":
@@ -28,7 +27,7 @@
 @   r0: resultado de la suma de firstOperand y secondOperand
 @
 .thumb_func
-    asm_sum:
+    sum_asm:
         add r0, r1  @ r0 = r0 + r1
         bx lr       @ vuelve adonde fue llamada (especificamente, si "pc"
                     @ es la direccion, en el codigo del programa, de la
