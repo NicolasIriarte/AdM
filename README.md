@@ -260,3 +260,52 @@ La Unidad de Protección de Memoria (MPU, por sus siglas en inglés, Memory Prot
 
 8. **Seguridad y Aislamiento**: En aplicaciones críticas de seguridad, como sistemas de automoción o dispositivos médicos, la MPU contribuye a garantizar que los componentes del sistema estén adecuadamente aislados y protegidos contra vulnerabilidades y ataques.
 
+## 20 - ¿Cuántas regiones pueden configurarse como máximo? ¿Qué ocurre en caso de haber solapamientos de las regiones? ¿Qué ocurre con las zonas de memoria no cubiertas por las regiones definidas?
+
+La cantidad máxima de regiones que se pueden configurar en la Unidad de Protección de Memoria (MPU) de un microcontrolador Cortex-M depende de la implementación específica de hardware de dicho microcontrolador. Diferentes microcontroladores pueden ofrecer diferentes cantidades de regiones configurables. En algunos casos, puede haber una limitación en el número de regiones, mientras que en otros, la cantidad de regiones puede ser más flexible y depende de la configuración.
+
+En cuanto a solapamientos de regiones:
+
+1. **Posibles Solapamientos**: La MPU permite definir regiones de memoria con direcciones base y límites específicos. Si no se configura adecuadamente, es posible que se produzcan solapamientos de regiones. Esto significa que una dirección de memoria específica puede estar cubierta por más de una región definida, lo que crea conflictos en las reglas de acceso.
+
+2. **Prioridad de Regiones**: La prioridad de regiones se determina en función del orden en que se definen en la configuración de la MPU. La región definida más recientemente tiene prioridad sobre las regiones previamente definidas en caso de solapamiento. En otras palabras, si dos regiones se solapan, se aplicarán las reglas de acceso de la región más reciente.
+
+En relación con las zonas de memoria no cubiertas por las regiones definidas:
+
+1. **Sin Protección Específica**: Las zonas de memoria que no están cubiertas por ninguna región definida en la configuración de la MPU no tienen restricciones de acceso específicas impuestas por la MPU. En otras palabras, el acceso a estas zonas de memoria no se ve afectado por las reglas de acceso de la MPU y depende de la configuración de acceso predeterminada o del sistema operativo (si está presente).
+
+2. **Acceso Normal**: En general, las zonas de memoria no cubiertas por regiones definidas en la MPU permiten el acceso normal según la configuración predeterminada del microcontrolador. Esto significa que se pueden leer y escribir sin restricciones a menos que se apliquen reglas de acceso adicionales a nivel de software.
+
+## 21 - ¿Para qué se suele utilizar la excepción PendSV? ¿Cómo se relaciona su uso con el resto de las excepciones? Dé un ejemplo
+
+La excepción PendSV (Pendable Supervisor Call) tiene como principal propósito es facilitar la planificación y el cambio de contexto de tareas en sistemas operativos en tiempo real (RTOS) y entornos multitarea. A continuación, se describen sus usos y su relación con otras excepciones:
+
+1. **Cambio de Contexto de Tareas**: La excepción PendSV se utiliza para realizar cambios de contexto de tareas en sistemas multitarea. Cuando se produce un cambio de contexto, el estado de una tarea (registros, punteros de pila, etc.) se guarda en la pila y se restaura el estado de otra tarea para que pueda ejecutarse. Esto permite que múltiples tareas se ejecuten de manera concurrente en un sistema embebido.
+2. **Planificación de Tareas**: El PendSV se activa típicamente cuando se decide cambiar de una tarea a otra según la política de planificación del sistema operativo en tiempo real. Puede ser activado manualmente por el sistema operativo o como parte de una interrupción de temporizador (por ejemplo, cuando se agota el tiempo asignado a una tarea).
+
+
+La excepción PendSV se configura generalmente con la prioridad más baja en el sistema, lo que significa que puede ser interrumpida por otras excepciones de mayor prioridad. Esto permite que se realicen cambios de contexto de tareas de manera segura incluso si se activan excepciones más críticas. Esto garantiza que las tareas críticas puedan ejecutarse sin demoras excesivas debido a cambios de contexto pendientes.
+
+En muchos sistemas, la excepción SysTick se utiliza para generar interrupciones periódicas que se utilizan para realizar cambios de contexto o activar tareas a intervalos regulares. La excepción PendSV puede coordinarse con la excepción SysTick para planificar y ejecutar cambios de contexto en momentos adecuados.
+
+1. Tarea A se ejecuta y consume su tiempo asignado.
+2. El planificador del RTOS decide que es hora de cambiar a Tarea B.
+3. La excepción SysTick genera una interrupción que, al terminar, activa la excepción PendSV.
+4. En PendSV, el RTOS guarda el estado de Tarea A y restaura el estado de Tarea B.
+5. Tarea B comienza a ejecutarse.
+6. Cuando Tarea B consume su tiempo asignado, el planificador decide cambiar a Tarea C.
+7. La excepción SysTick nuevamente activa PendSV.
+8. PendSV guarda el estado de Tarea B y restaura el estado de Tarea C.
+9. El ciclo continúa con cambios de contexto según lo decida el planificador.
+
+## 22 - ¿Para qué se suele utilizar la excepción SVC? Expliquelo dentro de un marco de un sistema operativo embebido.
+
+La excepción SVC (Supervisor Call) se utiliza comúnmente en sistemas embebidos que ejecutan sistemas operativos en tiempo real (RTOS) o sistemas que requieren una transición controlada entre el modo de usuario y el modo supervisor. A continuación, se explica el propósito y el uso de la excepción SVC en el contexto de un sistema operativo embebido:
+
+1. **Llamadas al Sistema (System Calls)**: Una de las principales aplicaciones de la excepción SVC es permitir llamadas al sistema (system calls). Las llamadas al sistema son solicitudes realizadas por un programa de usuario para acceder a servicios o recursos del sistema operativo, como la creación de tareas, la gestión de memoria, la comunicación entre procesos o la administración de archivos. Estas solicitudes se hacen mediante una instrucción especial, que genera una excepción SVC.
+
+2. **Transición al Modo Supervisor**: Cuando ocurre una excepción SVC, el procesador cambia del modo de usuario al modo supervisor. En este modo, el sistema operativo tiene acceso a recursos privilegiados y puede realizar operaciones que no están permitidas en el modo de usuario, como acceder a registros de control y realizar tareas de administración del sistema.
+
+3. **Gestión de Llamadas al Sistema**: El sistema operativo, que se ejecuta en modo supervisor, captura la excepción SVC y la interpreta para determinar la acción solicitada por el programa de usuario. Dependiendo del número o código de SVC específico proporcionado por el programa de usuario, el sistema operativo ejecuta la llamada al sistema correspondiente. Por ejemplo, si el programa de usuario solicita una asignación de memoria, el sistema operativo puede asignar un bloque de memoria y devolver un puntero al programa de usuario.
+
+4. **Control de Acceso a Recursos**: La excepción SVC también permite al sistema operativo aplicar políticas de seguridad y control de acceso a recursos. El sistema operativo puede verificar si el programa de usuario tiene los privilegios necesarios para realizar la llamada al sistema solicitada y tomar medidas en consecuencia.
