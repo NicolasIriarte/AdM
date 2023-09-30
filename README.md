@@ -161,3 +161,55 @@ La secuencia de reset es una tarea compleja la cual está dividida en multiple e
 6. **Ejecución de la rutina de manejo de reinicio**: La rutina de manejo de reinicio (Reset Handler) se encarga de inicializar variables, configurar periféricos y llevar a cabo tareas necesarias para poner el sistema en un estado coherente y prepararlo para la ejecución del programa principal.
 
 7. **Llamada al programa principal**: Una vez que la rutina de manejo de reinicio ha realizado todas las tareas necesarias, puede llamar al programa principal (main) o a la aplicación principal del dispositivo.
+
+## 12 - ¿Qué entiende por "core peripherals"? ¿Qué diferencia existe entre estos y el resto de los periféricos?
+
+Los "core peripherals" (periféricos centrales) se refieren a un conjunto de periféricos esenciales y fundamentales que están directamente relacionados con el funcionamiento central de un microcontrolador o microprocesador. Estos periféricos son críticos para el funcionamiento básico y la comunicación con el núcleo del procesador. A menudo, están integrados en el diseño del microcontrolador o microprocesador y son esenciales para su operación.
+
+Las principales diferencias entre los "core peripherals" y el resto de los periféricos son las siguientes:
+
+1. **Importancia fundamental**: Los "core peripherals" son periféricos críticos y fundamentales sin los cuales el microcontrolador o microprocesador no puede funcionar de manera adecuada. Estos periféricos a menudo incluyen el temporizador del sistema, el controlador de interrupciones, el controlador de interrupciones de excepciones, el sistema de gestión de energía y el bus de acceso a memoria.
+2. **Integración central**: Los "core peripherals" suelen estar integrados directamente en el chip del microcontrolador o microprocesador. Esto significa que están disponibles de manera predeterminada y están siempre presentes en el dispositivo, sin necesidad de componentes externos adicionales.
+3. **Interfaz con el núcleo del procesador**: Los "core peripherals" a menudo interactúan directamente con el núcleo del procesador, permitiendo funciones críticas como el inicio y la detención del procesador, la gestión de excepciones y el acceso a la memoria.
+
+## 13 - ¿Cómo se implementan las prioridades de las interrupciones? Dé un ejemplo
+
+Cortex-M implementa mediante un sistema de prioridades que permite asignar niveles de prioridad a las diferentes fuentes de interrupción. Este sistema de prioridades permite que las interrupciones se manejen en el orden adecuado según su importancia. Dicho sistema es llamado NVIC (Nested Vectored Interrupt Controller) que es un controlador de interrupciones integrado responsable de administrar y priorizar las interrupciones. Cada fuente de interrupción se asigna a un número de canal de interrupción (IRQ) específico. El NVIC permite asignar un nivel de prioridad a cada canal de interrupción. Los niveles de prioridad generalmente se dividen en grupos predefinidos, donde el nivel 0 es el más alto y el nivel n es el más bajo, siendo n el número de niveles de prioridad disponibles.
+
+## 14 - ¿Qué es el CMSIS? ¿Qué función cumple? ¿Quién lo provee? ¿Qué ventajas aporta?
+
+CMSIS (Cortex Microcontroller Software Interface Standard) es una especificación y una colección de bibliotecas de software desarrolladas por ARM para simplificar y unificar el desarrollo de software para microcontroladores basados en la arquitectura Cortex-M.
+
+La función principal de CMSIS es proporcionar una capa de abstracción de hardware y una interfaz estandarizada para el acceso a los recursos y las características de los microcontroladores Cortex-M, como los registros de periféricos, las interrupciones, los temporizadores y más. CMSIS facilita el desarrollo de software para microcontroladores al proporcionar una API coherente y portátil que puede utilizarse en múltiples dispositivos Cortex-M de diferentes fabricantes.
+
+Las ventajas que aporta CMSIS incluyen:
+
+1. **Facilita el desarrollo**: CMSIS simplifica y acelera el desarrollo de software para microcontroladores al proporcionar una interfaz coherente y portátil.
+
+2. **Portabilidad**: Permite escribir código que se puede reutilizar en diferentes microcontroladores Cortex-M, lo que ahorra tiempo y esfuerzo.
+
+3. **Eficiencia**: CMSIS ofrece acceso eficiente a los recursos de hardware, lo que es esencial para el desarrollo de sistemas embebidos con restricciones de recursos.
+
+4. **Mantenimiento más sencillo**: Al seguir una interfaz estandarizada, el código es más fácil de mantener y actualizar a medida que cambian los microcontroladores.
+
+## 15 - Cuando ocurre una interrupción, asumiendo que está habilitada ¿Cómo opera el microprocesador para atender a la subrutina correspondiente? Explique con un ejemplo
+
+Cuando ocurre una interrupción y está habilitada, el microprocesador opera siguiendo un conjunto de pasos para atender a la subrutina correspondiente. Estos pasos son típicos en la mayoría de las arquitecturas de microcontroladores y microprocesadores.
+
+Supongamos que estamos trabajando ejecutando un código y se produce una interrupción externa, como una señal de un botón que indica una solicitud de interrupción. Vamos a asumir que la interrupción ha sido habilitada y priorizada correctamente.
+
+1. **Detección de la interrupción**: Cuando ocurre la interrupción, el microprocesador primero detecta la solicitud de interrupción. Esto puede ser una señal de hardware que se activa cuando se presiona el botón en nuestro ejemplo.
+
+2. **Guardar estado actual**: Antes de saltar a la rutina de manejo de interrupción, el microprocesador debe guardar su estado actual. Esto implica guardar los valores de los registros que se están utilizando en la ejecución actual del programa, así como la dirección de retorno, para que una vez que se maneje la interrupción, se pueda regresar al punto exacto donde se interrumpió. Estos valores se almacenan en la pila.
+
+3. **Determinar la fuente de la interrupción**: El microprocesador debe determinar qué tipo de interrupción ha ocurrido. En nuestro ejemplo, se podría verificar si la interrupción provino del botón o de otra fuente.
+
+4. **Buscar la dirección de la rutina de manejo de interrupción**: Cada fuente de interrupción tiene asociada una dirección de inicio de la rutina de manejo de interrupción correspondiente. El microprocesador accede a esta dirección a través de un vector de interrupción o una tabla de vectores. En el caso de Cortex-M, esto se maneja a través del NVIC (Nested Vectored Interrupt Controller).
+
+5. **Ejecutar la rutina de manejo de interrupción**: El microprocesador salta a la dirección de la rutina de manejo de interrupción y comienza a ejecutar las instrucciones en esa ubicación. La rutina de manejo de interrupción realiza las tareas necesarias para responder a la interrupción. En nuestro ejemplo, podría ser el procesamiento del botón, como cambiar el estado de un LED.
+
+6. **Restaurar estado anterior**: Una vez que se ha completado la rutina de manejo de interrupción, se restaura el estado anterior del microprocesador. Los valores de los registros y la dirección de retorno se recuperan desde la pila.
+
+7. **Retorno de la interrupción**: El microprocesador ejecuta una instrucción de retorno de interrupción (RET o RETI) que lo lleva de vuelta al punto donde se interrumpió originalmente. El programa principal continúa su ejecución desde este punto.
+
+## 16 -
