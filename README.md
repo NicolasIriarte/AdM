@@ -125,3 +125,22 @@ ADD R1, R2, #2  ; Suma R2 y ${2} y almacena el resultado en R1 si R0 > 10
 3. **Hard Fault**: La excepción de fallo grave (Hard Fault) es una excepción de alta prioridad que se genera cuando ocurre un error grave en la ejecución del programa, como una violación de acceso a memoria o una instrucción no válida. Puede ser causada por problemas de software o hardware. El Hard Fault es un mecanismo de seguridad que ayuda a proteger el sistema contra comportamientos inesperados.
 
 
+## Describa las funciones principales de la pila. ¿Cómo resuelve la arquitectura el llamado a funciones y su retorno?
+
+La pila cumple cuatro funciones principalmente:
+
+1. **Almacenamiento temporal de datos**: La pila se utiliza para almacenar temporalmente datos, como valores de registros, direcciones de retorno y variables locales, durante la ejecución de una función o una rutina.
+
+2. **Gestión de llamadas a funciones**: La pila se utiliza para administrar la secuencia de llamadas a funciones y el retorno de estas funciones. Cada vez que se llama a una función, su estado actual, como los registros y la dirección de retorno, se almacena en la pila para que la función pueda ejecutarse y, posteriormente, restaurar su estado cuando regresa.
+
+3. **Almacenamiento de contexto de interrupciones**: La pila se utiliza para almacenar el contexto actual del procesador cuando ocurre una interrupción o una excepción. Esto permite que el procesador atienda la interrupción y, una vez completada, regrese al punto donde se interrumpió.
+
+4. **Gestión de variables locales**: Las variables locales, que son específicas de una función, se almacenan en la pila para que estén disponibles durante la ejecución de la función. Esto garantiza que cada instancia de la función tenga su propia área de almacenamiento para sus variables locales.
+
+
+El proceso de llamado de funciones se puede dividir en tres grandes etapas:
+
+1. **Llamada a función**: Cuando se llama a una función, se almacenan en la pila los valores de los registros que puedan ser modificados por la función llamada, así como la dirección de retorno, que es la dirección de la instrucción siguiente a la llamada a la función. Luego, se ajusta el puntero de pila (stack pointer) para reservar espacio para estos datos en la parte superior de la pila.
+2. **Ejecución de la función**: La función se ejecuta utilizando los registros y los datos almacenados en la pila. Las variables locales de la función también se almacenan en la pila y se acceden desde allí durante la ejecución de la función.
+3. **Retorno de función**: Cuando la función termina su ejecución, se restaura el estado original almacenado en la pila, incluyendo los valores de los registros y la dirección de retorno. puntero de pila se ajusta nuevamente para eliminar los datos de la función de la pila.
+
