@@ -309,3 +309,74 @@ La excepción SVC (Supervisor Call) se utiliza comúnmente en sistemas embebidos
 3. **Gestión de Llamadas al Sistema**: El sistema operativo, que se ejecuta en modo supervisor, captura la excepción SVC y la interpreta para determinar la acción solicitada por el programa de usuario. Dependiendo del número o código de SVC específico proporcionado por el programa de usuario, el sistema operativo ejecuta la llamada al sistema correspondiente. Por ejemplo, si el programa de usuario solicita una asignación de memoria, el sistema operativo puede asignar un bloque de memoria y devolver un puntero al programa de usuario.
 
 4. **Control de Acceso a Recursos**: La excepción SVC también permite al sistema operativo aplicar políticas de seguridad y control de acceso a recursos. El sistema operativo puede verificar si el programa de usuario tiene los privilegios necesarios para realizar la llamada al sistema solicitada y tomar medidas en consecuencia.
+
+# ISA
+
+## 1 - ¿Qué son los sufijos y para qué se los utiliza? Dé un ejemplo
+
+Los sufijos se utilizan para especificar la longitud de la operación de datos y controlar cómo se manejan las operaciones de lectura/escritura de registros. Los sufijos más comunes son "B" (byte), "H" (halfword) y "S" (sign-extend).
+
+1. Control de Longitud de Datos: Los sufijos se utilizan para especificar la longitud de la operación de datos. Esto es especialmente útil en arquitecturas de 32 bits como Cortex-M, donde es común realizar operaciones en múltiples tamaños de datos (bytes, halfwords, palabras, etc.).
+
+2. Operaciones de Signo Extendido: Los sufijos "S" y "U" se utilizan para controlar si las operaciones de carga y almacenamiento deben realizar una extensión de signo o no. Por ejemplo, "LDRSB" se refiere a una carga con extensión de signo de byte, mientras que "LDRB" se refiere a una carga de byte sin extensión de signo.
+
+
+Ejemplo:
+
+```asm
+LDRSB Rd, [Rn, #offset] ; Cargar un byte con extensión de signo desde la memoria a un registro
+```
+
+En este ejemplo, el sufijo "SB" en "LDRSB" indica que se debe cargar un byte con extensión de signo, lo que significa que el valor se extenderá para mantener el signo cuando se almacene en el registro de destino "Rd". Los sufijos como "SB" ayudan a los programadores a comprender la operación que se está realizando y a garantizar que se utilice la operación correcta según los requisitos de la aplicación.
+
+
+## 2 - ¿Para qué se utiliza el sufijo 's'? Dé un ejemplo
+
+El sufijo 's' se utiliza para indicar que una instrucción afectará las banderas APSR (Arithmetic Processor Status Register). Estas banderas de estado suelen incluir la bandera de resultado cero (Z), la bandera de desbordamiento (V), la bandera de acarreo (C), entre otras. Cuando se utiliza el sufijo 's', la instrucción modificará las banderas de estado según el resultado de la operación y, en algunos casos, puede generar excepciones si se producen condiciones especiales.
+
+**Ejemplo**:
+
+Supongamos que tenemos la siguiente instrucción en el conjunto de instrucciones Thumb:
+
+```asm
+ADDS Rd, Rn, Rm
+```
+
+## 3 - ¿Qué utilidad tiene la implementación de instrucciones de aritmética saturada? Dé un ejemplo con operaciones con datos de 8 bits.
+
+La implementación de instrucciones de aritmética saturada es útil para garantizar que los resultados de las operaciones aritméticas no superen los límites de representación de datos, evitando así desbordamientos y pérdida de información en aplicaciones críticas o sensibles a desbordamientos.
+
+En aritmética saturada, cuando el resultado de una operación excede el valor máximo o mínimo que puede representar un dato, se "satura" o limita el resultado al valor máximo o mínimo permitido en lugar de permitir que ocurra un desbordamiento. Esto asegura que los datos no se corrompan y que los cálculos sean más robustos en situaciones límite.
+
+```asm
+ADDS Rd, Rn, #127 ; Donde Rn contiene el valor 10. Rd tiene el valor #127
+```
+
+## 4 - Describa brevemente la interfaz entre assembler y C ¿Cómo se reciben los argumentos de las funciones? ¿Cómo se devuelve el resultado? ¿Qué registros deben guardarse en la pila antes de ser modificados?
+
+Los primeros argumentos suelen pasarse en registros, mientras que los argumentos adicionales se almacenan en la pila. Por ejemplo, los primeros cuatro argumentos pueden pasarse en los registros `R0`, `R1`, `R2` y `R3`, y los argumentos adicionales se almacenan en la pila.
+
+Para devolver resultados desde una función escrita en ensamblador a C, generalmente se utiliza un registro específico.
+
+Es importante preservar los registros que se utilizan en una función antes de ser modificados para evitar interferencias con el código de llamada o con otras funciones. En la convención de llamada ARM Cortex-M, los registros R4-R11 deben preservarse si se utilizan en una función y deben restaurarse a su estado original antes de que la función regrese. La preservación generalmente se logra guardando los valores de estos registros en la pila al comienzo de la función y restaurándolos antes de la salida.
+
+
+## 5 - ¿Qué es una instrucción SIMD? ¿En qué se aplican y que ventajas reporta su uso? Dé un ejemplo.
+
+Las instrucciones SIMD (Single Instruction, Multiple Data) se refieren a un conjunto de instrucciones que permiten realizar operaciones en paralelo en múltiples datos en registros simultáneamente. Estas instrucciones se utilizan para acelerar el procesamiento de datos cuando se trabaja con conjuntos de datos grandes y homogéneos.
+
+Ventajas del uso de instrucciones SIMD:
+
+1. Aceleración del Procesamiento: SIMD permite realizar operaciones en paralelo en varios elementos de datos al mismo tiempo, lo que acelera significativamente el procesamiento de grandes conjuntos de datos.
+
+2. Reducción del Overhead: Al realizar operaciones en varios datos con una sola instrucción, se reduce el overhead de la ejecución de múltiples instrucciones individuales.
+
+3. Mejora del Rendimiento: Las instrucciones SIMD pueden llevar a mejoras significativas en el rendimiento de aplicaciones que involucran cálculos intensivos en datos, como procesamiento de imágenes y señales.
+
+Ejemplo:
+
+Supongamos que tenemos cuatro registros de 8 bits: `R0` y `R1`. Queremos sumar los valores en estos registros en paralelo utilizando instrucciones SIMD:
+
+```asm
+UADD8 R4, R0, R1
+```
