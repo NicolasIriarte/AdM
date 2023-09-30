@@ -84,7 +84,7 @@ Un ejemplo de registros ortogonales es cualquier arquitectura que posea registro
 
 ```asm
 
-; Ejemplo en lenguaje ensamblador para Cortex-M
+; Ejemplo de manipulación de registros de propositos generales
 ; Supongamos que R0, R1 y R2 son registros generales disponibles
 
 ; Sumar R1 y R2 y almacenar el resultado en R0
@@ -97,5 +97,22 @@ MUL R1, R2, R3   ; Multiplicar R2 por R3 y almacenar el resultado en R1
 ; Comparar R0 con un valor inmediato y establecer una bandera
 CMP R0, #10      ; Comparar R0 con el valor 10
 
+```
+
+## ¿Qué ventajas presenta el uso de intrucciones de ejecución condicional (IT)? Dé un ejemplo
+
+Las instrucciones de ejecución condicional (IT, por sus siglas en inglés, *If-Then*) son una característica que permiten ejecutar instrucciones condicionalmente. Esto permite:
+
+1. Ahorro de espacio de código: Las instrucciones de ejecución condicional pueden reducir la cantidad de código necesaria para implementar lógica condicional en comparación con utilizar instrucciones de salto (branch) condicional. Esto puede llevar a un código más compacto y eficiente en términos de memoria.
+2. Mejora del rendimiento: Al evitar saltos condicionales (branch), que pueden causar desviaciones en el flujo de ejecución y afectar negativamente el rendimiento de la canalización (pipeline) del procesador, las instrucciones de ejecución condicional pueden ayudar a mantener un flujo de ejecución más predecible y un rendimiento más consistente.
+3. Programación más legible: Las instrucciones de ejecución condicional pueden hacer que el código sea más fácil de entender y mantener, ya que la lógica condicional se expresa de manera más directa y se alinea visualmente con la instrucción que se va a ejecutar.
+
+
+```asm
+; Ejemplo en lenguaje ensamblador Cortex-M con instrucciones IT
+CMP  R0, #10      ; Compara el valor en R0 con 10
+IT   GT           ; Si R0 es mayor que 10, las próximas instrucciones serán condicionales
+
+ADD R1, R2, #2  ; Suma R2 y ${2} y almacena el resultado en R1 si R0 > 10
 ```
 
