@@ -116,3 +116,12 @@ IT   GT           ; Si R0 es mayor que 10, las próximas instrucciones serán co
 ADD R1, R2, #2  ; Suma R2 y ${2} y almacena el resultado en R1 si R0 > 10
 ```
 
+## Describa brevemente las excepciones más prioritarias (reset, NMI, Hardfault).
+
+1. **Reset**: La excepción de reinicio (Reset) es la más prioritaria y se produce cuando el procesador se inicia o se reinicia. Esta excepción es invocada al encender o reiniciar el sistema y establece el estado inicial del procesador y la ejecución del programa comienza desde una dirección de memoria específica, generalmente la dirección de inicio del programa (vector de reinicio).
+
+2. **NMI (Non-Maskable Interrupt)**: La excepción de interrupción no enmascarable es la segunda más prioritaria después del reinicio. Es una interrupción que no puede ser deshabilitada o enmascarada por el software y se utiliza para manejar eventos críticos que deben ser atendidos inmediatamente, como eventos de seguridad o fallos de hardware.
+
+3. **Hard Fault**: La excepción de fallo grave (Hard Fault) es una excepción de alta prioridad que se genera cuando ocurre un error grave en la ejecución del programa, como una violación de acceso a memoria o una instrucción no válida. Puede ser causada por problemas de software o hardware. El Hard Fault es un mecanismo de seguridad que ayuda a proteger el sistema contra comportamientos inesperados.
+
+
