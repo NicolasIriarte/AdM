@@ -1,6 +1,6 @@
 # Preguntas orientadoras
 
-## Describa brevemente los diferentes perfiles de familias de microprocesadores/microcontroladores de ARM. Explique alguna de sus diferencias características
+## 1 - Describa brevemente los diferentes perfiles de familias de microprocesadores/microcontroladores de ARM. Explique alguna de sus diferencias características
 A lo largo de los años, ARM ha desarrollado varias familias de microprocesadores y microcontroladores con diferentes perfiles para adaptarse a diversas aplicaciones:
 - **Cortex-A**: Son procesadores que están diseñados para aplicaciones de alto rendimiento, como smartphones, tabletas y sistemas embebidos avanzados. Ofrecen un rendimiento excepcional, soporte para sistemas operativos completos como Linux y Windows, y generalmente cuentan con múltiples núcleos para el procesamiento paralelo.
 - **Cortex-R**: Se enfocan en aplicaciones de tiempo real y sistemas críticos, como controladores de automóviles, controladores de vuelo y sistemas de comunicación. Ofrecen tiempos de respuesta predecibles y alta confiabilidad. Suelen utilizarse en sistemas que requieren alta velocidad y seguridad.
@@ -8,7 +8,7 @@ A lo largo de los años, ARM ha desarrollado varias familias de microprocesadore
 
 # Cortex M
 
-## Describa brevemente las diferencias entre las familias de procesadores Cortex M0, M3 y M4
+## 1 - Describa brevemente las diferencias entre las familias de procesadores Cortex M0, M3 y M4
 
 Las familias de procesadores M0, M3 y M4 son parte de la serie Cortex-M de ARM, diseñadas específicamente para aplicaciones embebidas de bajo consumo de energía.
 
@@ -33,24 +33,24 @@ Las familias de procesadores M0, M3 y M4 son parte de la serie Cortex-M de ARM, 
 - **Cortex-M3:** Por lo general, no incluye extensiones DSP en su arquitectura estándar, pero algunas implementaciones pueden incluir extensiones personalizadas para operaciones DSP.
 - **Cortex-M4:** Incluye extensiones DSP en su arquitectura, lo que lo hace ideal para aplicaciones de procesamiento de señales y matemáticas complejas, como filtros y transformadas.
 
-## ¿Por qué se dice que el set de instrucciones Thumb permite mayor densidad de código?
+## 2 - ¿Por qué se dice que el set de instrucciones Thumb permite mayor densidad de código?
 Se dice que el conjunto de instrucciones Thumb permite una mayor densidad de código por varias razones:
 1. Longitud de las instrucciones: En Thumb, las instrucciones son generalmente más cortas que en el conjunto de instrucciones ARM completo. Las instrucciones Thumb suelen ser de 16 bits de longitud, mientras que las instrucciones ARM pueden ser de 32 bits. Esto significa que se necesita menos espacio de memoria para almacenar el mismo programa en Thumb en comparación con ARM.
 2. Menos ciclos de reloj por instrucción: Las instrucciones Thumb a menudo requieren menos ciclos de reloj para ejecutarse en comparación con sus contrapartes ARM.
 3. Menor consumo de memoria: Debido a que las instrucciones Thumb son más cortas, ocupan menos espacio en la memoria, lo que es beneficioso para sistemas con limitaciones de memoria, como sistemas integrados y dispositivos móviles.
 4. Reducción del tráfico de memoria: Con un código más compacto, hay menos necesidad de acceder a la memoria principal para buscar instrucciones, lo que puede reducir el consumo de energía y mejorar la eficiencia del sistema.
 
-## ¿Qué entiende por arquitectura load-store? ¿Qué tipo de instrucciones no posee este tipo de arquitectura?
+## 3 - ¿Qué entiende por arquitectura load-store? ¿Qué tipo de instrucciones no posee este tipo de arquitectura?
 La arquitectura load-store (carga-almacenamiento) es un diseño de arquitectura de computadora que se caracteriza por restringir las operaciones de acceso a la memoria principal (RAM) solo a un conjunto específico de instrucciones, llamadas instrucciones de carga (load) y almacenamiento (store). En una arquitectura load-store, las operaciones aritméticas y lógicas se realizan solo en registros del procesador, y no se pueden realizar directamente en la memoria.
 
-## ¿Cómo es el mapa de memoria de la familia?
+## 4 - ¿Cómo es el mapa de memoria de la familia?
 
 Al tratarse de una arquitectura de 32 bits, es posible direccionar $2^{32} - 1$ posiciones de memoria (4Gb). A continuación se presenta un grafico con el mapa de memeria:
 
 
 ![Mapa de memoria](./assets/memory-map.jpg)
 
-## ¿Qué ventajas presenta el uso de los "shadowed pointers" del PSP y el MSP?
+## 5 - ¿Qué ventajas presenta el uso de los "shadowed pointers" del PSP y el MSP?
 
 - PSP (Process Stack Pointer): El PSP es un puntero de pila que se utiliza para gestionar la pila de una tarea específica en un sistema multitarea en tiempo real. Cada tarea tiene su propio PSP para mantener su contexto de ejecución.
 
@@ -61,7 +61,7 @@ Los shadowed pointers permiten:
 1. Cambio rápido de contexto: Los *shadowed pointers* permiten un cambio rápido y eficiente entre el stack de usuario y la pila principal. Esto es esencial en sistemas multitarea en tiempo real donde es necesario cambiar rápidamente de una tarea a otra.
 2. Soporte para interrupciones: En sistemas embebidos, es común manejar interrupciones. Los *shadowed pointers* facilitan la transición de una tarea a una rutina de interrupción y viceversa, garantizando que el contexto de la tarea original se restaure después de que se maneje la interrupción.
 
-## Describa los diferentes modos de privilegio y operación del Cortex M, sus relaciones y como se conmuta de uno al otro. Describa un ejemplo en el que se pasa del modo privilegiado a no priviligiado y nuevamente a privilegiado.
+## 6 - Describa los diferentes modos de privilegio y operación del Cortex M, sus relaciones y como se conmuta de uno al otro. Describa un ejemplo en el que se pasa del modo privilegiado a no priviligiado y nuevamente a privilegiado.
 
 Cortex-M de ARM utiliza un modelo de seguridad y protección de recursos basado en modos de privilegio y operación para garantizar la ejecución segura y eficiente de tareas en sistemas embebidos. Los modos de operación en Cortex-M incluyen:
 
@@ -76,7 +76,7 @@ La conmutación entre estos modos se logra mediante instrucciones de excepción,
 Un ejemplo de cambio de privilegio se dá con el uso de sistemas operativos de tiempo real, los cuales corren su kernel en modo privilegiado para contralar todos los recursos del procesador, mientras que las tareas del usuarios se ejecutan en modo sin-privilegios.
 
 
-## ¿Qué se entiende por modelo de registros ortogonal? Dé un ejemplo
+## 7 - ¿Qué se entiende por modelo de registros ortogonal? Dé un ejemplo
 
 El término "modelo de registros ortogonal" se refiere a una característica de algunas arquitecturas de procesadores donde los registros generales están diseñados de manera que puedan ser utilizados de manera intercambiable en una amplia variedad de instrucciones sin restricciones específicas en su uso. En un modelo de registros ortogonal, los registros pueden ser operados y direccionados de manera uniforme, lo que simplifica la programación y permite una mayor flexibilidad en la ejecución de instrucciones.
 
@@ -99,7 +99,7 @@ CMP R0, #10      ; Comparar R0 con el valor 10
 
 ```
 
-## ¿Qué ventajas presenta el uso de intrucciones de ejecución condicional (IT)? Dé un ejemplo
+## 8 - ¿Qué ventajas presenta el uso de intrucciones de ejecución condicional (IT)? Dé un ejemplo
 
 Las instrucciones de ejecución condicional (IT, por sus siglas en inglés, *If-Then*) son una característica que permiten ejecutar instrucciones condicionalmente. Esto permite:
 
@@ -116,7 +116,7 @@ IT   GT           ; Si R0 es mayor que 10, las próximas instrucciones serán co
 ADD R1, R2, #2  ; Suma R2 y ${2} y almacena el resultado en R1 si R0 > 10
 ```
 
-## Describa brevemente las excepciones más prioritarias (reset, NMI, Hardfault).
+## 9 - Describa brevemente las excepciones más prioritarias (reset, NMI, Hardfault).
 
 1. **Reset**: La excepción de reinicio (Reset) es la más prioritaria y se produce cuando el procesador se inicia o se reinicia. Esta excepción es invocada al encender o reiniciar el sistema y establece el estado inicial del procesador y la ejecución del programa comienza desde una dirección de memoria específica, generalmente la dirección de inicio del programa (vector de reinicio).
 
@@ -125,7 +125,7 @@ ADD R1, R2, #2  ; Suma R2 y ${2} y almacena el resultado en R1 si R0 > 10
 3. **Hard Fault**: La excepción de fallo grave (Hard Fault) es una excepción de alta prioridad que se genera cuando ocurre un error grave en la ejecución del programa, como una violación de acceso a memoria o una instrucción no válida. Puede ser causada por problemas de software o hardware. El Hard Fault es un mecanismo de seguridad que ayuda a proteger el sistema contra comportamientos inesperados.
 
 
-## Describa las funciones principales de la pila. ¿Cómo resuelve la arquitectura el llamado a funciones y su retorno?
+## 10 - Describa las funciones principales de la pila. ¿Cómo resuelve la arquitectura el llamado a funciones y su retorno?
 
 La pila cumple cuatro funciones principalmente:
 
@@ -144,3 +144,20 @@ El proceso de llamado de funciones se puede dividir en tres grandes etapas:
 2. **Ejecución de la función**: La función se ejecuta utilizando los registros y los datos almacenados en la pila. Las variables locales de la función también se almacenan en la pila y se acceden desde allí durante la ejecución de la función.
 3. **Retorno de función**: Cuando la función termina su ejecución, se restaura el estado original almacenado en la pila, incluyendo los valores de los registros y la dirección de retorno. puntero de pila se ajusta nuevamente para eliminar los datos de la función de la pila.
 
+## 11 - Describa la secuencia de reset del microprocesador.
+
+La secuencia de reset es una tarea compleja la cual está dividida en multiple etapas:
+
+1. **Alimentación o reinicio del sistema**: El proceso de reset comienza cuando se aplica alimentación eléctrica al microprocesador (por ejemplo, al encender el dispositivo) o cuando se genera un reinicio del sistema.
+
+2. **Inicialización del hardware**: En esta etapa, los circuitos internos del microprocesador se inicializan y configuran para un estado conocido y predecible. Esto puede incluir la configuración de relojes, registros internos, y otros componentes.
+
+3. **Carga de vectores de reinicio**: Los microprocesadores Cortex-M utilizan una tabla de vectores de interrupción para determinar cómo se manejan las interrupciones y las excepciones, incluido el vector de reinicio. En esta etapa, se cargan los valores de los vectores de reinicio que apuntan a las direcciones iniciales de las rutinas de manejo de reinicio.
+
+4. **Configuración de registros de pila**: Se establece el puntero de pila (Stack Pointer, SP) en una ubicación válida de memoria. El valor del SP puede provenir de una ubicación específica de memoria o estar predefinido en el hardware. La pila se utiliza para almacenar datos temporales y registros de contexto durante la ejecución del programa.
+
+5. **Salto a la dirección de reinicio**: Una vez que todos los ajustes iniciales se han realizado y los vectores de reinicio están configurados, el microprocesador realiza un salto a la dirección de reinicio. La dirección de reinicio suele ser la primera entrada en la tabla de vectores de interrupción, que apunta a la rutina de manejo de reinicio.
+
+6. **Ejecución de la rutina de manejo de reinicio**: La rutina de manejo de reinicio (Reset Handler) se encarga de inicializar variables, configurar periféricos y llevar a cabo tareas necesarias para poner el sistema en un estado coherente y prepararlo para la ejecución del programa principal.
+
+7. **Llamada al programa principal**: Una vez que la rutina de manejo de reinicio ha realizado todas las tareas necesarias, puede llamar al programa principal (main) o a la aplicación principal del dispositivo.
