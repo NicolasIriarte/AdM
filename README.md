@@ -48,4 +48,4 @@ La arquitectura load-store (carga-almacenamiento) es un diseño de arquitectura 
 Al tratarse de una arquitectura de 32 bits, es posible direccionar $2^32 - 1$ posiciones de memoria (4Gb). A continuación se presenta un grafico con el mapa de memeria:
 
 
-[Memory Map](/assets/memory-map.jpg")
+[Memory Map](/assets/memory-map.jpg)
