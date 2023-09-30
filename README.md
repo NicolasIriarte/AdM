@@ -236,3 +236,27 @@ Son utilizados en algunos controladores de interrupciones para mejorar la eficie
 
    - **Ventajas**: El late arrival es útil cuando las interrupciones son de naturaleza crítica y no pueden permitirse perderse, incluso si se generan mientras se maneja otra interrupción. Esto asegura que todas las interrupciones se manejen adecuadamente y se reduce el riesgo de pérdida de eventos importantes.
 
+## 18 - ¿Qué es el systick? ¿Por qué puede afirmarse que su implementación favorece la portabilidad de los sistemas operativos embebidos?
+
+El "SysTick" es un temporizador o contador de sistema. Su principal propósito es proporcionar una fuente de temporización precisa que puede utilizarse para diversas tareas en sistemas embebidos. Debido a su independencia del hardware subyacente y a la consistencia en su funcionalidad entre los dispositivos Cortex-M, el SysTick es una herramienta importante para los sistemas operativos embebidos. Los sistemas operativos en tiempo real (RTOS) y otros componentes de software pueden aprovechar el SysTick como una fuente confiable y portátil de temporización. Los desarrolladores de sistemas operativos pueden escribir código que sea compatible con una variedad de microcontroladores Cortex-M sin tener que preocuparse por detalles de temporización específicos del hardware.
+
+## 19 - ¿Qué funciones cumple la unidad de protección de memoria (MPU)?
+
+La Unidad de Protección de Memoria (MPU, por sus siglas en inglés, Memory Protection Unit) cumple varias funciones clave relacionadas con la protección de la memoria y la seguridad en sistemas embebidos. Estas funciones incluyen:
+
+1. **Segmentación de Memoria**: La MPU permite dividir la memoria del sistema en regiones o segmentos con características de acceso específicas. Cada región de memoria puede configurarse con permisos de acceso individuales, como lectura, escritura y ejecución. Esto proporciona una forma de aislar y proteger diferentes áreas de la memoria del sistema.
+
+2. **Control de Acceso**: La MPU controla el acceso a la memoria mediante el uso de reglas de acceso específicas. Estas reglas definen quién puede acceder a una región de memoria en particular y qué tipo de acceso está permitido. Por ejemplo, se puede configurar para permitir que ciertos procesos o aplicaciones accedan solo a una región de memoria específica mientras se les niega el acceso a otras regiones.
+
+3. **Protección de Código**: La MPU puede utilizarse para proteger el código ejecutable en la memoria contra escritura o ejecución no autorizada. Esto es útil para prevenir modificaciones maliciosas o accidentalmente dañinas en el código del sistema.
+
+4. **Protección de Datos Sensibles**: Se puede utilizar la MPU para proteger datos sensibles almacenados en la memoria contra el acceso no autorizado. Esto es crítico en aplicaciones de seguridad y protección de datos, como sistemas de pago, dispositivos médicos y sistemas de control industrial.
+
+5. **Aislamiento de Procesos**: La MPU permite el aislamiento de procesos o aplicaciones en sistemas operativos en tiempo real (RTOS). Cada proceso puede tener su propia región de memoria protegida, lo que impide que un proceso acceda o modifique la memoria de otro proceso.
+
+6. **Prevención de Desbordamientos de Pila**: La MPU puede utilizarse para prevenir desbordamientos de pila (stack overflow) configurando regiones de memoria para la pila y estableciendo límites de acceso. Esto ayuda a detectar y prevenir condiciones de desbordamiento de pila que podrían ser explotadas por atacantes o causar fallas en el sistema.
+
+7. **Gestión de Excepciones**: La MPU puede generar excepciones cuando se violan las reglas de acceso configuradas. Estas excepciones pueden ser manejadas por el sistema para tomar medidas apropiadas, como generar registros de errores o detener la ejecución de una aplicación.
+
+8. **Seguridad y Aislamiento**: En aplicaciones críticas de seguridad, como sistemas de automoción o dispositivos médicos, la MPU contribuye a garantizar que los componentes del sistema estén adecuadamente aislados y protegidos contra vulnerabilidades y ataques.
+
