@@ -212,4 +212,27 @@ Supongamos que estamos trabajando ejecutando un código y se produce una interru
 
 7. **Retorno de la interrupción**: El microprocesador ejecuta una instrucción de retorno de interrupción (RET o RETI) que lo lleva de vuelta al punto donde se interrumpió originalmente. El programa principal continúa su ejecución desde este punto.
 
-## 16 -
+## 16 - ¿Cómo cambia la operación de stacking al utilizar la unidad de punto flotante?
+
+Al utilizar la unidad de punto flotante (FPU) en Cortex-M, se añaden registros de punto flotante adicionales, se utilizan instrucciones de carga y almacenamiento específicas para la FPU, y se gestiona un stack frame de punto flotante adicional para preservar el contexto de punto flotante durante excepciones e interrupciones. Esto permite realizar operaciones de punto flotante de manera eficiente y garantiza la integridad del contexto de punto flotante en el entorno de interrupciones y excepciones.
+
+## 17 - Explique las características avanzadas de atención a interrupciones: tail chaining y late arrival.
+
+Son utilizados en algunos controladores de interrupciones para mejorar la eficiencia y la capacidad de respuesta del sistema ante múltiples interrupciones. Estas características permiten que el procesador maneje interrupciones de manera más eficiente y flexible.
+
+1. **Tail Chaining (Encadenamiento de Cola)**:
+
+   - **Definición**: El tail chaining es una característica que permite que múltiples interrupciones se manejen en secuencia sin la necesidad de que el procesador regrese al estado normal entre cada interrupción.
+
+   - **Funcionamiento**: Cuando se habilita el tail chaining, el procesador puede iniciar la ejecución de una nueva rutina de manejo de interrupción tan pronto como finaliza la primera, sin salir completamente del contexto de interrupción. Esto ahorra tiempo y ciclos de procesador que se gastarían en restaurar y guardar todo el contexto de interrupción entre cada interrupción.
+
+   - **Ventajas**: El tail chaining es útil en situaciones en las que se generan múltiples interrupciones en rápida sucesión. Permite un manejo más eficiente de las interrupciones y reduce la latencia en la respuesta del sistema a eventos críticos.
+
+2. **Late Arrival (Llegada Tardía)**:
+
+   - **Definición**: El late arrival es una característica que permite que una interrupción se maneje incluso si ocurre después de que otra interrupción haya comenzado a ejecutarse.
+
+   - **Funcionamiento**: En sistemas que admiten late arrival, si una interrupción se activa mientras se está manejando otra interrupción, la nueva interrupción se encola y se maneja tan pronto como termine la interrupción actual en lugar de descartarse o ignorarse.
+
+   - **Ventajas**: El late arrival es útil cuando las interrupciones son de naturaleza crítica y no pueden permitirse perderse, incluso si se generan mientras se maneja otra interrupción. Esto asegura que todas las interrupciones se manejen adecuadamente y se reduce el riesgo de pérdida de eventos importantes.
+
