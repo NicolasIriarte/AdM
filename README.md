@@ -43,5 +43,9 @@ Se dice que el conjunto de instrucciones Thumb permite una mayor densidad de có
 ## ¿Qué entiende por arquitectura load-store? ¿Qué tipo de instrucciones no posee este tipo de arquitectura?
 La arquitectura load-store (carga-almacenamiento) es un diseño de arquitectura de computadora que se caracteriza por restringir las operaciones de acceso a la memoria principal (RAM) solo a un conjunto específico de instrucciones, llamadas instrucciones de carga (load) y almacenamiento (store). En una arquitectura load-store, las operaciones aritméticas y lógicas se realizan solo en registros del procesador, y no se pueden realizar directamente en la memoria.
 
+## ¿Cómo es el mapa de memoria de la familia?
+
+Al tratarse de una arquitectura de 32 bits, es posible direccionar $2^32 - 1$ posiciones de memoria (4Gb). A continuación se presenta un grafico con el mapa de memeria:
 
 
+[Memory Map](/assets/memory-map.jpg")
