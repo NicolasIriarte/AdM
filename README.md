@@ -76,3 +76,26 @@ La conmutación entre estos modos se logra mediante instrucciones de excepción,
 Un ejemplo de cambio de privilegio se dá con el uso de sistemas operativos de tiempo real, los cuales corren su kernel en modo privilegiado para contralar todos los recursos del procesador, mientras que las tareas del usuarios se ejecutan en modo sin-privilegios.
 
 
+## ¿Qué se entiende por modelo de registros ortogonal? Dé un ejemplo
+
+El término "modelo de registros ortogonal" se refiere a una característica de algunas arquitecturas de procesadores donde los registros generales están diseñados de manera que puedan ser utilizados de manera intercambiable en una amplia variedad de instrucciones sin restricciones específicas en su uso. En un modelo de registros ortogonal, los registros pueden ser operados y direccionados de manera uniforme, lo que simplifica la programación y permite una mayor flexibilidad en la ejecución de instrucciones.
+
+Un ejemplo de registros ortogonales es cualquier arquitectura que posea registros de propósitos generales. (General-Purpose Registers) que se pueden utilizar para una amplia variedad de tareas.
+
+```asm
+
+; Ejemplo en lenguaje ensamblador para Cortex-M
+; Supongamos que R0, R1 y R2 son registros generales disponibles
+
+; Sumar R1 y R2 y almacenar el resultado en R0
+ADD R0, R1, R2
+
+; Multiplicar R2 por 5 y almacenar el resultado en R1
+MOV R3, #5       ; Cargar el valor 5 en R3
+MUL R1, R2, R3   ; Multiplicar R2 por R3 y almacenar el resultado en R1
+
+; Comparar R0 con un valor inmediato y establecer una bandera
+CMP R0, #10      ; Comparar R0 con el valor 10
+
+```
+
